@@ -30,21 +30,6 @@ public class Job {
         this.coreCompetency = coreCompetency;
     }
 
-    //  Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
-    //  match.
-    @Override
-    public boolean equals(Object o) {
-        if(this == o) return true;
-        if(!(o instanceof Job) || o == null) return false;
-        Job job = (Job) o;
-        return this.id == job.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
-
     // Add getters for each field EXCEPT nextId. Add setters for each field EXCEPT nextID and id.
     public int getId() {
         return id;
@@ -79,6 +64,58 @@ public class Job {
     }
     public void setCoreCompetency(CoreCompetency coreCompetency) {
         this.coreCompetency = coreCompetency;
+    }
+
+    //  Add custom equals and hashCode methods. Consider two Job objects "equal" when their id fields
+    //  match.
+    @Override
+    public boolean equals(Object o) {
+        if(this == o) return true;
+        if(!(o instanceof Job) || o == null) return false;
+        Job job = (Job) o;
+        return this.id == job.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public String toString() {
+
+        assignDefaultMessageForEmptyFields();
+
+        String output = "\nID: " + this.getId() +
+                "\nName: " + this.getName() +
+                "\nEmployer: " + this.getEmployer() +
+                "\nLocation: " + this.getLocation() +
+                "\nPosition Type: " + this.getPositionType() +
+                "\nCore Competency: " + this.getCoreCompetency() + "\n";
+        return output;
+    }
+
+    /**
+     * Checks if job field values are empty or null. If so, the fields are given default
+     * values to indicate that the data is not available.
+     */
+    private void assignDefaultMessageForEmptyFields() {
+        String emptyField = "Data not available";
+
+        name = name == null || name.equals("") ?  emptyField : name;
+
+        if (employer == null || employer.getValue().equals("")) {
+            employer.setValue(emptyField);
+        }
+        if (location.getValue() == null || location.getValue().equals("")) {
+            location.setValue(emptyField);
+        }
+        if (coreCompetency.getValue() == null || coreCompetency.getValue().equals("")) {
+            coreCompetency.setValue(emptyField);
+        }
+        if ( positionType.getValue() == null || positionType.getValue().equals("")) {
+            positionType.setValue(emptyField);
+        }
     }
 
 }
